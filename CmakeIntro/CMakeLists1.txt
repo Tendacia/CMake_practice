@@ -1,0 +1,52 @@
+# CMakeLists.txt
+
+# 指定CMake最低版本
+cmake_minimum_required(VERSION 3.20)
+
+# project 是 cmake_minimum_required之后的第一条命令 
+# project(<project-NAME> [<language-name>...])
+project(Intro2Cmake C CXX)
+
+
+
+# 如果需要编译一个库，而非可执行文件，就需要使用 add_library
+# add_library(<name> [STATIC | SHARED | MODULE]
+#              [EXECLUDE_FROM_ALL] [<source>...])
+add_library(util util/util.cpp)
+
+add_library(base base/base.cpp)
+target_include_directories(base PUBLIC ${PROJECT_SOURCE_DIR}/util)
+
+
+# 添加一个可执行文件编译目标
+#   add_executable(<name> [WIN32] [MACOSX_BUNDLE] [EXCLUDE_FROM_ALL] [source1] [source2...])
+add_executable(app main.cpp)
+
+# 添加头文件搜索路径 
+#   target_include_directories(<target> [SYSTEM] [AFTER|BEFORE]  \
+#                            <INTERFACE|PUBLIC|PRIVATE> [item1...] \
+#                              [<INTERFACE|PUBLIC|PRIVATE> [items2...])
+#   如果使用 PRIVATE，只会在 INCLUDE_DIRECTORIES 添加头文件搜索路径
+#   如果使用 INTERFACE，只会在 INTERFACE_INCLUDE_DIRECTORIES 添加头文件搜索路径
+#   如果使用 PUBLIC，相当于同时使用 PRIVATE 和 INTERFACE
+target_include_directories(app PRIVATE ${PROJECT_SOURCE_DIR}/base)
+
+# target_link_libraries 命令是添加依赖库
+# target_link_libraries(<target>
+#                       <PRIVATE | PUBLIC | INTERFACE> <item>...
+#                       [<PRIVATE | PUBLIC | INTERFACE> <item>...]...)
+target_link_libraries(app base util)
+
+
+
+
+
+
+message(STATUS "project_name: ${PROJECT_NAME}")
+message(STATUS "project_source_dir ${PROJECT_SOURCE_DIR}")
+message(STATUS "project_binary_dir ${PROJECT_BINARY_DIR}")
+
+# include message
+
+message(STATUS "include_directories: ${INCLUDE_DIRECTORIES}")
+message(STATUS "interface_include_directories ${INTERFACE_INCLUDE_DIRECTORIES}")

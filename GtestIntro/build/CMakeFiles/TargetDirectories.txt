@@ -1,0 +1,3 @@
+/home/tendacia/CMake/GtestIntro/build/CMakeFiles/example_unittest.dir
+/home/tendacia/CMake/GtestIntro/build/CMakeFiles/edit_cache.dir
+/home/tendacia/CMake/GtestIntro/build/CMakeFiles/rebuild_cache.dir
